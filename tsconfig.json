@@ -18,7 +18,10 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@/*": ["src/*"]
+      "@partner1/*": ["apps/partner1/src/*"],
+      "@partner2/*": ["apps/partner2/src/*"],
+      "@app/core": ["libs/core/src"],
+      "@app/core/*": ["libs/core/src/*"]
     }
   }
 }
