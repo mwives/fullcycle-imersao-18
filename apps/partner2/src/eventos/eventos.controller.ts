@@ -8,12 +8,14 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common'
 import { AtualizarEventoRequest } from './request/atualizar-evento.request'
 import { CriarEventoRequest } from './request/criar-evento.request'
 import { ReservarLugarRequest } from './request/reservar-lugar.request'
 import { TipoIngresso } from './enum/tipo-ingresso.enum'
 import { TicketKind } from '@prisma/client'
+import { AuthGuard } from '@app/core/auth/auth.guard'
 
 @Controller('eventos')
 export class EventosController {
@@ -29,6 +31,7 @@ export class EventosController {
     })
   }
 
+  @UseGuards(AuthGuard)
   @Post(':id/reservar')
   reserveSpot(
     @Param('id') eventoId: string,

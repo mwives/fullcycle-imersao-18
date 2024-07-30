@@ -1,3 +1,5 @@
+import { EventsService } from '@app/core'
+import { AuthGuard } from '@app/core/auth/auth.guard'
 import {
   Body,
   Controller,
@@ -7,9 +9,8 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common'
-
-import { EventsService } from '@app/core'
 import { CreateEventRequest } from '@partner1/events/request/create-event.request'
 import { ReserveSpotRequest } from '@partner1/events/request/reserve-spot.request'
 import { UpdateEventRequest } from '@partner1/events/request/update-event.request'
@@ -23,6 +24,7 @@ export class EventsController {
     return this.eventsService.create(createEventRequest)
   }
 
+  @UseGuards(AuthGuard)
   @Post(':id/reserve')
   reserveSpot(
     @Param('id') eventId: string,
