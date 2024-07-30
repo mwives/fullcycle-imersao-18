@@ -1,0 +1,42 @@
+GET http://localhost:3001/eventos
+
+###
+# @name criarEvento
+POST http://localhost:3001/eventos
+Content-Type: application/json
+
+{
+  "nome": "New Event",
+  "descricao": "New Event description",
+  "data": "2020-01-01T00:00:00.000Z",
+  "preco": 100.10
+}
+
+###
+@eventoId = {{ criarEvento.response.body.id }}
+
+###
+GET http://localhost:3001/eventos/{{eventoId}}/lugares
+
+###
+# @name criarLugar
+POST http://localhost:3001/eventos/{{eventoId}}/lugares
+Content-Type: application/json
+
+{
+  "nome": "A1"
+}
+
+###
+@lugarNome = {{ criarLugar.response.body.name }}
+
+### Reserve spots
+POST http://localhost:3001/eventos/{{eventoId}}/reservar
+Content-Type: application/json
+X-Api-Token: partner2-token
+
+{
+  "lugares": ["{{lugarNome}}"],
+  "tipoIngresso": "inteira",
+  "email": "user1@test.com"
+}
