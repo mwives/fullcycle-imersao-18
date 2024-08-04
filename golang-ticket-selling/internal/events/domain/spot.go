@@ -25,16 +25,16 @@ const (
 
 type Spot struct {
 	ID       string
-	EventId  string
+	EventID  string
 	Name     string
 	Status   SpotStatus
-	TicketId string
+	TicketID string
 }
 
 func NewSpot(event *Event, name string) (*Spot, error) {
 	spot := &Spot{
 		ID:      uuid.New().String(),
-		EventId: event.ID,
+		EventID: event.ID,
 		Name:    name,
 		Status:  SpotStatusAvailable,
 	}
@@ -58,5 +58,14 @@ func (s *Spot) Validate() error {
 	if s.Name[1] < '0' || s.Name[1] > '9' {
 		return ErrSpotNameSecondCharNotDigit
 	}
+	return nil
+}
+
+func (s *Spot) Reserve(ticketID string) error {
+	if s.Status == SpotStatusSold {
+		return ErrSpotAlreadyReserved
+	}
+	s.Status = SpotStatusSold
+	s.TicketID = ticketID
 	return nil
 }
