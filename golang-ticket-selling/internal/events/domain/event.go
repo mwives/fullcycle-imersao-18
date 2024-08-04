@@ -37,3 +37,28 @@ type Event struct {
 	Spots        []Spot
 	Tickets      []Ticket
 }
+
+func (e Event) Validate() error {
+	if e.Name == "" {
+		return ErrEventNameRequired
+	}
+	if e.Date.Before(time.Now()) {
+		return ErrEventDatePast
+	}
+	if e.Capacity <= 0 {
+		return ErrEventCapacity
+	}
+	if e.Price <= 0 {
+		return ErrEventPriceZero
+	}
+	return nil
+}
+
+func (e *Event) AddSpot(name string) (*Spot, error) {
+	spot, err := NewSpot(e, name)
+	if err != nil {
+		return nil, err
+	}
+	e.Spots = append(e.Spots, *spot)
+	return spot, nil
+}
