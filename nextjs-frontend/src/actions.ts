@@ -42,26 +42,26 @@ export async function checkoutAction({
 }) {
   const cookieStore = cookies();
   const eventId = cookieStore.get("eventId")?.value;
-  const spots = JSON.parse(cookieStore.get("spots")?.value || "[]");
+  const spots: string[] = JSON.parse(cookieStore.get("spots")?.value || "[]");
   const ticketKind = cookieStore.get("ticketKind")?.value || "full";
 
-  const response = await fetch(`http://localhost:8080/checkout`, {
-    method: "POST",
-    body: JSON.stringify({
-      event_id: eventId,
-      card_hash: cardHash,
-      ticket_kind: ticketKind,
-      spots,
-      email,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  // const response = await fetch(`http://localhost:8080/checkout`, {
+  //   method: "POST",
+  //   body: JSON.stringify({
+  //     event_id: eventId,
+  //     card_hash: cardHash,
+  //     ticket_kind: ticketKind,
+  //     spots,
+  //     email,
+  //   }),
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // });
 
-  if (!response.ok) {
-    return { error: "Erro ao realizar a compra" };
-  }
+  // if (!response.ok) {
+  //   return { error: "Erro ao realizar a compra" };
+  // }
 
   revalidateTag(`events/${eventId}`);
   redirect(`/checkout/${eventId}/success`);
