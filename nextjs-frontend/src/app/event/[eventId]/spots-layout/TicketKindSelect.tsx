@@ -1,6 +1,6 @@
 "use client";
 
-import { selectTicketTypeAction } from "@/actions";
+import { selectTicketKindAction } from "@/actions";
 
 export type TicketKindSelectProps = {
   defaultValue: "full" | "half";
@@ -28,7 +28,7 @@ export function TicketKindSelect({
         className="mt-2 rounded-lg bg-input px-4 py-[14px]"
         defaultValue={defaultValue}
         onChange={async (e) => {
-          await selectTicketTypeAction(e.target.value as "full" | "half");
+          await selectTicketKindAction(e.target.value as "full" | "half");
         }}
       >
         <option value="full">Inteira - {formattedFullPrice}</option>

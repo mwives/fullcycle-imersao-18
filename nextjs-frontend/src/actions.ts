@@ -28,7 +28,7 @@ export async function clearSpotsAction() {
   cookieStore.set("eventId", "");
 }
 
-export async function selectTicketTypeAction(ticketKind: "full" | "half") {
+export async function selectTicketKindAction(ticketKind: "full" | "half") {
   const cookieStore = cookies();
   cookieStore.set("ticketKind", ticketKind);
 }
