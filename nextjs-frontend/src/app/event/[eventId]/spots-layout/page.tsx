@@ -7,7 +7,7 @@ import { Title } from "@/components/Title";
 import { EventModel, SpotModel } from "@/models";
 import { TicketKindSelect } from "./TicketKindSelect";
 
-export async function getSpots(eventId: string): Promise<{
+async function getSpots(eventId: string): Promise<{
   event: EventModel;
   spots: SpotModel[];
 }> {

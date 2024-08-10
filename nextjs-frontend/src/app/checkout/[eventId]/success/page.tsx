@@ -1,8 +1,8 @@
 import { Title } from "@/components/Title";
 import { EventModel } from "@/models";
 import { cookies } from "next/headers";
-// queries
-export async function getEvent(eventId: string): Promise<EventModel> {
+
+async function getEvent(eventId: string): Promise<EventModel> {
   // const response = await fetch(
   //   `${process.env.GOLANG_API_URL}/events/${eventId}`,
   //   {

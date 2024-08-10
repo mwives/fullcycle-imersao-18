@@ -2,7 +2,7 @@ import { EventCard } from "@/components/EventCard";
 import { Title } from "@/components/Title";
 import { EventModel } from "@/models";
 
-export async function getEvents(): Promise<EventModel[]> {
+async function getEvents(): Promise<EventModel[]> {
   // const response = await fetch("http://localhost:8080/events", {
   //   cache: "no-store",
   // });

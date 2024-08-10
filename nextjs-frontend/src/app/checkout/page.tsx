@@ -5,7 +5,7 @@ import { CheckoutForm } from "@/app/checkout/CheckoutForm";
 import { Title } from "@/components/Title";
 import { EventModel } from "@/models";
 
-export async function getEvent(eventId: string): Promise<EventModel> {
+async function getEvent(eventId: string): Promise<EventModel> {
   return {
     id: "1",
     name: "Show de Rock",
