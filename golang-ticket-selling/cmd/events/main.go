@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	db, err := sql.Open("mysql", "test_user:test_password@tcp(localhost:3306)/test_db")
+	db, err := sql.Open("mysql", "docker:docker@tcp(golang_mysql:3306)/tickets_db")
 	if err != nil {
 		panic(err)
 	}
