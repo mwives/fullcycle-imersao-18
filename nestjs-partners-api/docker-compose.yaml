@@ -1,5 +1,20 @@
 services:
-  db:
+  nestjs:
+    container_name: nestjs_partners_api
+    build: .
+    ports:
+      - 3000:3000
+      - 3001:3001
+    volumes:
+      - .:/home/node/app:cached
+    env_file:
+      - .env.partner1
+      - .env.partner2
+    depends_on:
+      - nestjs_mysql
+    command: npm run start partner1
+
+  nestjs_mysql:
     image: mysql:9.0.1
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -9,10 +24,3 @@ services:
     volumes:
       - ./.docker/mysql:/docker-entrypoint-initdb.d
       # - ./.docker/dbdata:/var/lib/mysql
-
-  app:
-    build: .
-    ports:
-      - 3000:3000
-    volumes:
-      - .:/home/node/app:cached

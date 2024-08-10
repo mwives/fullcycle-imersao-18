@@ -1,11 +1,17 @@
-FROM node:20-slim
+FROM node:20-alpine
 
-RUN apt update && apt install -y openssl procps
+RUN npm i -g pnpm
 
-RUN npm install -g @nestjs/cli
+WORKDIR /app
 
-WORKDIR /home/node/app
+COPY package.json pnpm-lock.yaml ./
 
-USER node
+RUN pnpm install
 
-CMD tail -f /dev/null
+COPY . .
+
+RUN pnpm build
+
+EXPOSE 3000 3001
+
+ENTRYPOINT ["/app/entrypoint.sh"]
