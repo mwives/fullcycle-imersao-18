@@ -1,4 +1,5 @@
 import { EventsService } from '@app/core'
+import { AuthGuard } from '@app/core/auth/auth.guard'
 import {
   Body,
   Controller,
@@ -10,12 +11,12 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common'
+import { TicketKind } from '@prisma/client'
+import { TipoIngresso } from './enum/tipo-ingresso.enum'
 import { AtualizarEventoRequest } from './request/atualizar-evento.request'
 import { CriarEventoRequest } from './request/criar-evento.request'
 import { ReservarLugarRequest } from './request/reservar-lugar.request'
-import { TipoIngresso } from './enum/tipo-ingresso.enum'
-import { TicketKind } from '@prisma/client'
-import { AuthGuard } from '@app/core/auth/auth.guard'
+import { ReservarLugarResponse } from './response/reservar-lugar.response'
 
 @Controller('eventos')
 export class EventosController {
@@ -33,7 +34,7 @@ export class EventosController {
 
   @UseGuards(AuthGuard)
   @Post(':id/reservar')
-  reserveSpot(
+  async reserveSpot(
     @Param('id') eventoId: string,
     @Body() reservarLugarRequest: ReservarLugarRequest,
   ) {
@@ -42,12 +43,13 @@ export class EventosController {
         ? TicketKind.FULL
         : TicketKind.HALF
 
-    return this.eventsService.reserveSpot({
+    const ingressos = await this.eventsService.reserveSpot({
       eventId: eventoId,
       spots: reservarLugarRequest.lugares,
       ticketKind: tipoIngresso,
       email: reservarLugarRequest.email,
     })
+    return new ReservarLugarResponse(ingressos)
   }
 
   @Get()

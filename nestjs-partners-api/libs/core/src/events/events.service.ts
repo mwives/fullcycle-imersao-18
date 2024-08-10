@@ -91,6 +91,7 @@ export class EventsService {
                   ticketKind,
                   email,
                 },
+                include: { Spot: true },
               }),
             ),
           )
