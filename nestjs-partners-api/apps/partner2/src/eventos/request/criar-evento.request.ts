@@ -1,6 +1,6 @@
 export class CriarEventoRequest {
   nome: string
   descricao: string
-  data: string
+  data: Date
   preco: number
 }
