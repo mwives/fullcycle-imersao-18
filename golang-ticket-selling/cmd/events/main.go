@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"log"
 	"net/http"
 
 	httpHandler "github.com/mwives/fullcycle-imersao-18/golang-ticket-selling/internal/events/infra/http"
@@ -46,5 +47,13 @@ func main() {
 	r.HandleFunc("/events/{eventID}/spots", eventsHandler.ListSpots)
 	r.HandleFunc("POST /checkout", eventsHandler.BuyTickets)
 
-	http.ListenAndServe(":8080", r)
+	server := &http.Server{
+		Addr:    ":8080",
+		Handler: r,
+	}
+
+	log.Println("HTTP Server running on port 8080")
+	if err := server.ListenAndServe(); err != http.ErrServerClosed {
+		log.Fatalf("Error starting HTTP server: %v\n", err)
+	}
 }
