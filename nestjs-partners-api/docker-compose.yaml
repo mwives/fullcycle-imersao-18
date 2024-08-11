@@ -1,26 +1,26 @@
 services:
   nestjs:
-    container_name: nestjs_partners_api
     build: .
     ports:
       - 3000:3000
       - 3001:3001
     volumes:
       - .:/home/node/app:cached
-    env_file:
-      - .env.partner1
-      - .env.partner2
     depends_on:
-      - nestjs_mysql
-    command: npm run start partner1
+      nestjs_mysql:
+        condition: service_healthy
 
   nestjs_mysql:
     image: mysql:9.0.1
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: nest
     ports:
       - 3306:3306
     volumes:
       - ./.docker/mysql:/docker-entrypoint-initdb.d
       # - ./.docker/dbdata:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 3
