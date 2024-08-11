@@ -10,6 +10,8 @@
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "migrate:partner1": "dotenv -e .env.partner1 -- npx prisma migrate dev",
     "migrate:partner2": "dotenv -e .env.partner2 -- npx prisma migrate dev",
+    "fixture:partner1": "nest start partner1-fixture",
+    "fixture:partner2": "nest start partner2-fixture",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",

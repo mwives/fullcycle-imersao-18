@@ -8,12 +8,6 @@ echo "Running migrations..."
 pnpm migrate:partner1
 pnpm migrate:partner2
 
-echo "Running fixture commands..."
-
-# Run fixture command for both partner1 and partner2
-pnpm start partner1-fixture
-pnpm start partner2-fixture
-
 echo "Starting applications..."
 
 # Start partner1 and partner2 applications sequentially
