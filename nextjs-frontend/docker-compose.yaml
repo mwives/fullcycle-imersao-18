@@ -2,10 +2,13 @@ services:
   nextjs:
     build: .
     ports:
-      - 4200:3000
+      - 3002:3000
     volumes:
       - .:/home/node/app:cached
     environment:
-      - NODE_ENV=development
+      NODE_ENV: development
+      GOLANG_API_URL: http://host.docker.internal:8000/golang
+      GOLANG_API_TOKEN: 259e1f708bfdb5b464677502aadb5cc0
+
     extra_hosts:
       - host.docker.internal:host-gateway
