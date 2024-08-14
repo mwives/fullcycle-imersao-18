@@ -28,7 +28,7 @@ export async function clearSpotsAction() {
   cookieStore.set("eventId", "");
 }
 
-export async function selectTicketKindAction(ticketKind: "full" | "half") {
+export async function selectTicketKindAction(ticketKind: "FULL" | "HALF") {
   const cookieStore = cookies();
   cookieStore.set("ticketKind", ticketKind);
 }
@@ -43,26 +43,27 @@ export async function checkoutAction({
   const cookieStore = cookies();
   const eventId = cookieStore.get("eventId")?.value;
   const spots: string[] = JSON.parse(cookieStore.get("spots")?.value || "[]");
-  const ticketKind = cookieStore.get("ticketKind")?.value || "full";
+  const ticketKind = cookieStore.get("ticketKind")?.value || "FULL";
 
-  // const response = await fetch(`http://localhost:8080/checkout`, {
-  //   method: "POST",
-  //   body: JSON.stringify({
-  //     event_id: eventId,
-  //     card_hash: cardHash,
-  //     ticket_kind: ticketKind,
-  //     spots,
-  //     email,
-  //   }),
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // });
+  const response = await fetch(`${process.env.GOLANG_API_URL}/checkout`, {
+    method: "POST",
+    body: JSON.stringify({
+      event_id: eventId,
+      card_hash: cardHash,
+      ticket_kind: ticketKind,
+      spots,
+      email,
+    }),
+    headers: {
+      "api-key": process.env.GOLANG_API_TOKEN as string,
+      "Content-Type": "application/json",
+    },
+  });
 
-  // if (!response.ok) {
-  //   return { error: "Erro ao realizar a compra" };
-  // }
+  if (!response.ok) {
+    return { error: "Erro ao realizar a compra" };
+  }
 
   revalidateTag(`events/${eventId}`);
-  redirect(`/checkout/${eventId}/success`);
+  redirect(`checkout/${eventId}/success`);
 }

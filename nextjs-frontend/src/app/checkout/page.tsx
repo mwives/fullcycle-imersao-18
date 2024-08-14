@@ -6,16 +6,19 @@ import { Title } from "@/components/Title";
 import { EventModel } from "@/models";
 
 async function getEvent(eventId: string): Promise<EventModel> {
-  return {
-    id: "1",
-    name: "Show de Rock",
-    imageUrl: "/images/rock-in-rio.jpg",
-    location: "Centro de Eventos",
-    date: "2024-05-11T20:00:00",
-    organization: "Rock in Rio",
-    rating: "Livre",
-    price: 100,
-  };
+  const response = await fetch(
+    `${process.env.GOLANG_API_URL}/events/${eventId}`,
+    {
+      headers: {
+        "api-key": process.env.GOLANG_API_TOKEN as string,
+      },
+      cache: "no-store",
+      next: {
+        tags: [`events/${eventId}`],
+      },
+    },
+  );
+  return response.json();
 }
 
 export default async function CheckoutPage() {
@@ -34,7 +37,7 @@ export default async function CheckoutPage() {
 
   const totalPrice =
     selectedSpots.length *
-    (ticketKind === "full" ? event.price : event.price / 2);
+    (ticketKind === "FULL" ? event.price : event.price / 2);
   const formattedTotalPrice = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",

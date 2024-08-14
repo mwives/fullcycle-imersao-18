@@ -3,30 +3,19 @@ import { EventModel } from "@/models";
 import { cookies } from "next/headers";
 
 async function getEvent(eventId: string): Promise<EventModel> {
-  // const response = await fetch(
-  //   `${process.env.GOLANG_API_URL}/events/${eventId}`,
-  //   {
-  //     headers: {
-  //       apikey: process.env.GOLANG_API_TOKEN as string,
-  //     },
-  //     cache: "no-store",
-  //     next: {
-  //       tags: [`events/${eventId}`],
-  //     },
-  //   },
-  // );
-
-  // return response.json();
-  return {
-    id: "1",
-    name: "React Summit",
-    organization: "ReactJS",
-    date: "2022-10-10",
-    price: 100,
-    rating: "5",
-    imageUrl: "/react.jpeg",
-    location: "Online",
-  };
+  const response = await fetch(
+    `${process.env.GOLANG_API_URL}/events/${eventId}`,
+    {
+      headers: {
+        "api-key": process.env.GOLANG_API_TOKEN as string,
+      },
+      cache: "no-store",
+      next: {
+        tags: [`events/${eventId}`],
+      },
+    },
+  );
+  return response.json();
 }
 
 export default async function CheckoutSuccessPage({

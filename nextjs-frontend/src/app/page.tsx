@@ -3,22 +3,13 @@ import { Title } from "@/components/Title";
 import { EventModel } from "@/models";
 
 async function getEvents(): Promise<EventModel[]> {
-  // const response = await fetch("http://localhost:8080/events", {
-  //   cache: "no-store",
-  // });
-  // return response.json();
-  return [
-    {
-      id: "1",
-      name: "React Summit",
-      organization: "ReactJS",
-      date: "2022-10-10",
-      price: 100,
-      rating: "5",
-      imageUrl: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2",
-      location: "Online",
+  const response = await fetch(`${process.env.GOLANG_API_URL}/events`, {
+    cache: "no-store",
+    headers: {
+      "api-key": process.env.GOLANG_API_TOKEN as string,
     },
-  ];
+  });
+  return (await response.json()).events;
 }
 
 export default async function HomePage() {

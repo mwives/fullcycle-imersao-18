@@ -3,7 +3,7 @@
 import { selectTicketKindAction } from "@/actions";
 
 export type TicketKindSelectProps = {
-  defaultValue: "full" | "half";
+  defaultValue: "FULL" | "HALF";
   price: number;
 };
 
@@ -28,11 +28,11 @@ export function TicketKindSelect({
         className="mt-2 rounded-lg bg-input px-4 py-[14px]"
         defaultValue={defaultValue}
         onChange={async (e) => {
-          await selectTicketKindAction(e.target.value as "full" | "half");
+          await selectTicketKindAction(e.target.value as "FULL" | "HALF");
         }}
       >
-        <option value="full">Inteira - {formattedFullPrice}</option>
-        <option value="half">Meia-entrada - {formattedHalfPrice}</option>
+        <option value="FULL">Inteira - {formattedFullPrice}</option>
+        <option value="HALF">Meia-entrada - {formattedHalfPrice}</option>
       </select>
     </>
   );

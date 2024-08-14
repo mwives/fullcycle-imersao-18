@@ -11,50 +11,19 @@ async function getSpots(eventId: string): Promise<{
   event: EventModel;
   spots: SpotModel[];
 }> {
-  // const response = await fetch(
-  //   `http://localhost:8080/events/${eventId}/spots`,
-  //   {
-  //     cache: "no-store",
-  //     next: {
-  //       tags: [`events/${eventId}`],
-  //     },
-  //   },
-  // );
-  // return response.json();
-  return {
-    event: {
-      id: "1",
-      name: "React Summit",
-      organization: "ReactJS",
-      date: "2022-10-10",
-      price: 100,
-      rating: "5",
-      imageUrl: "/react.jpeg",
-      location: "Online",
+  const response = await fetch(
+    `${process.env.GOLANG_API_URL}/events/${eventId}/spots`,
+    {
+      headers: {
+        "api-key": process.env.GOLANG_API_TOKEN as string,
+      },
+      cache: "no-store",
+      next: {
+        tags: [`events/${eventId}`],
+      },
     },
-    spots: [
-      { id: "1", name: "A1", status: "available" },
-      { id: "5", name: "A5", status: "sold" },
-      { id: "3", name: "A3", status: "available" },
-      { id: "6", name: "A6", status: "sold" },
-      { id: "2", name: "A2", status: "available" },
-      { id: "10", name: "A10", status: "available" },
-      { id: "7", name: "A7", status: "available" },
-      { id: "8", name: "A8", status: "available" },
-      { id: "4", name: "A4", status: "available" },
-      { id: "9", name: "A9", status: "sold" },
-      { id: "11", name: "B1", status: "available" },
-      { id: "15", name: "B5", status: "sold" },
-      { id: "13", name: "B3", status: "sold" },
-      { id: "16", name: "B6", status: "available" },
-      { id: "12", name: "B2", status: "available" },
-      { id: "20", name: "B10", status: "available" },
-      { id: "17", name: "B7", status: "sold" },
-      { id: "18", name: "B8", status: "sold" },
-      { id: "14", name: "B4", status: "sold" },
-      { id: "19", name: "B9", status: "sold" },
-    ],
-  };
+  );
+  return response.json();
 }
 
 export default async function SpotsLayoutPage({
@@ -81,10 +50,10 @@ export default async function SpotsLayoutPage({
   const selectedSpots: string[] = JSON.parse(
     cookieStore.get("spots")?.value || "[]",
   );
-  const ticketKind: string = cookieStore.get("ticketKind")?.value || "full";
+  const ticketKind: string = cookieStore.get("ticketKind")?.value || "FULL";
   const totalPrice =
     selectedSpots.length *
-    (ticketKind === "half" ? event.price / 2 : event.price);
+    (ticketKind === "HALF" ? event.price / 2 : event.price);
   const formattedTotalPrice = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -93,7 +62,7 @@ export default async function SpotsLayoutPage({
   return (
     <main className="mt-10">
       <div className="flex w-[1176px] max-w-full flex-row flex-wrap justify-center gap-x-8 rounded-2xl bg-secondary p-4 md:justify-normal">
-        <EventImage src={event.imageUrl} alt={event.name} />
+        <EventImage src={event.image_url} alt={event.name} />
         <div className="flex max-w-full flex-col gap-y-6">
           <div className="flex flex-col gap-y-2">
             <p className="text-sm font-semibold uppercase text-subtitle">

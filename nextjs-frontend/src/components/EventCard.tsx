@@ -10,7 +10,7 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Link href={`/event/${event.id}/spots-layout`}>
       <div className="flex w-[277px] flex-col rounded-2xl bg-secondary">
-        <EventImage src={event.imageUrl} alt={event.name} />
+        <EventImage src={event.image_url} alt={event.name} />
         <div className="flex flex-col gap-y-2 px-4 py-6">
           <p className="text-sm uppercase text-subtitle">
             {new Date(event.date).toLocaleDateString("pt-BR", {
