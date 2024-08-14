@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+	"os"
 
 	httpHandler "github.com/mwives/fullcycle-imersao-18/golang-ticket-selling/internal/events/infra/http"
 	"github.com/mwives/fullcycle-imersao-18/golang-ticket-selling/internal/events/infra/repository"
@@ -24,8 +25,8 @@ func main() {
 	}
 
 	partnerBaseURLs := map[int]string{
-		1: "http://localhost:8081/api-1",
-		2: "http://localhost:8081/api-2",
+		1: os.Getenv("PARTNER_1_URL"),
+		2: os.Getenv("PARTNER_2_URL"),
 	}
 	partnerFactory := service.NewPartnerFactory(partnerBaseURLs)
 
