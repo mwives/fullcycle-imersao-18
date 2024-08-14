@@ -25,7 +25,7 @@ export async function createFixture(
 
   const spots = []
   for (let i = 0; i < numSpots; i++) {
-    const row = String.fromCharCode(97 + Math.floor(i / 5))
+    const row = String.fromCharCode(97 + Math.floor(i / 5)).toUpperCase()
     const column = (i % 5) + 1
     createdEvents.forEach((event) => {
       spots.push({
