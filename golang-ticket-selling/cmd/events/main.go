@@ -42,10 +42,10 @@ func main() {
 	)
 
 	r := http.NewServeMux()
-	r.HandleFunc("/events", eventsHandler.ListEvents)
-	r.HandleFunc("/events/{eventID}", eventsHandler.GetEvent)
-	r.HandleFunc("/events/{eventID}/spots", eventsHandler.ListSpots)
-	r.HandleFunc("POST /checkout", eventsHandler.BuyTickets)
+	r.HandleFunc("/events", httpHandler.ErrorHandler(eventsHandler.ListEvents))
+	r.HandleFunc("/events/{eventID}", httpHandler.ErrorHandler(eventsHandler.GetEvent))
+	r.HandleFunc("/events/{eventID}/spots", httpHandler.ErrorHandler(eventsHandler.ListSpots))
+	r.HandleFunc("POST /checkout", httpHandler.ErrorHandler(eventsHandler.BuyTickets))
 
 	server := &http.Server{
 		Addr:    ":8080",
