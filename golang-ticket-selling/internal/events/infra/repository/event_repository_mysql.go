@@ -309,7 +309,7 @@ func (r *mysqlEventRepository) FindSpotByName(eventID, spotName string) (*domain
 			t.event_id,
 			t.spot_id,
 			t.ticket_kind,
-			t.prce
+			t.price
 		FROM
 			spots s
 			LEFT JOIN tickets t ON s.id = t.spot_id

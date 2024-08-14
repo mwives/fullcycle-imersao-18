@@ -14,8 +14,8 @@ var (
 )
 
 const (
-	TicketKindHalf TicketKind = "half" // Half-price ticket
-	TicketKindFull TicketKind = "full" // Full-price ticket
+	TicketKindHalf TicketKind = "HALF" // Half-price ticket
+	TicketKindFull TicketKind = "FULL" // Full-price ticket
 )
 
 type Ticket struct {

@@ -36,6 +36,7 @@ func (uc *ListSpotsUseCase) Execute(input ListSpotsInputDTO) (*ListSpotsOutputDT
 	for i, spot := range spots {
 		spotsDTO[i] = SpotDTO{
 			ID:       spot.ID,
+			Name:     spot.Name,
 			EventID:  spot.EventID,
 			Status:   string(spot.Status),
 			TicketID: spot.TicketID,

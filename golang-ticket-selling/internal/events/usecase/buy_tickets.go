@@ -59,7 +59,7 @@ func (uc *BuyTicketsUseCase) Execute(input BuyTicketsInputDTO) (*BuyTicketsOutpu
 			return nil, err
 		}
 
-		ticket, err := domain.NewTicket(event, spot, domain.TicketKind(reservation.TicketKind))
+		ticket, err := domain.NewTicket(event, spot, domain.TicketKind(input.TicketKind))
 		if err != nil {
 			return nil, err
 		}

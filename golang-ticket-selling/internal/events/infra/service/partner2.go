@@ -38,7 +38,7 @@ func (p *Partner2) MakeReservation(req *ReservationRequest) ([]ReservationRespon
 		return nil, err
 	}
 
-	url := fmt.Sprintf("%s/events/%s/reservar", p.BaseURL, req.EventID)
+	url := fmt.Sprintf("%s/eventos/%s/reservar", p.BaseURL, req.EventID)
 	httpReq, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
