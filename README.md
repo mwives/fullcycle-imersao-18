@@ -11,7 +11,7 @@ This repository contains the source code and materials for the **Imersão Full C
 
 ## Project Overview
 
-This project demonstrates a microservices architecture for a ticket-selling platform. It features a Next.js frontend, a Golang API for handling ticket sales, and NestJS services that simulate potential ticket-selling partners. Kong is utilized as the API Gateway to manage and secure API traffic..
+This project demonstrates a microservices architecture for a ticket-selling platform. It features a Next.js frontend, a Golang API for handling ticket sales, and NestJS services that simulate potential ticket-selling partners. Kong is utilized as the API Gateway to manage and secure API traffic.
 
 ## Prerequisites
 
@@ -32,8 +32,6 @@ cd fullcycle-imersao-18
 ```
 
 ### Run the Services
-
-To start all services, use Docker Compose:
 
 Use Docker Compose to start the services:
 
