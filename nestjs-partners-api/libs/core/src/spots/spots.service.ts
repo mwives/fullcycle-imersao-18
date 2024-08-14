@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { SpotStatus } from '@prisma/client'
 
 import { PrismaService } from '@app/core/prisma/prisma.service'
@@ -7,6 +7,8 @@ import { UpdateSpotDto } from './dto/update-spot.dto'
 
 @Injectable()
 export class SpotsService {
+  private readonly logger = new Logger(SpotsService.name)
+
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createSpotDto: CreateSpotDto & { eventId: string }) {
@@ -17,6 +19,7 @@ export class SpotsService {
     })
 
     if (!event) {
+      this.logger.warn(`Event not found: ${createSpotDto.eventId}`)
       throw new NotFoundException('Event not found')
     }
 

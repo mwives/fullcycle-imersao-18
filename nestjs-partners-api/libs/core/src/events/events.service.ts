@@ -1,5 +1,5 @@
 import { PrismaService } from '@app/core/prisma/prisma.service'
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable, Logger } from '@nestjs/common'
 import { Prisma, SpotStatus, TicketStatus } from '@prisma/client'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 import { CreateEventDto } from './dto/create-event.dto'
@@ -8,6 +8,8 @@ import { UpdateEventDto } from './dto/update-event.dto'
 
 @Injectable()
 export class EventsService {
+  private readonly logger = new Logger(EventsService.name)
+
   constructor(private prismaService: PrismaService) {}
 
   create(createEventDto: CreateEventDto) {
@@ -59,9 +61,9 @@ export class EventsService {
       const missingSpots = spotNames.filter(
         (spot) => !foundSpots.includes(spot),
       )
-      throw new BadRequestException(
-        `Spots not found: ${missingSpots.join(', ')}`,
-      )
+      const errorMessage = `Spots not found: ${missingSpots.join(', ')}`
+      this.logger.warn(errorMessage)
+      throw new BadRequestException(errorMessage)
     }
 
     try {
@@ -106,7 +108,9 @@ export class EventsService {
         switch (err.code) {
           case 'P2002': // Unique constraint violation
           case 'P2034': // Foreign key constraint violation (transaction conflict)
-            throw new BadRequestException('Some spots are already reserved')
+            const errorMessage = 'Some spots are already reserved'
+            this.logger.warn(errorMessage)
+            throw new BadRequestException(errorMessage)
         }
       }
       throw err
