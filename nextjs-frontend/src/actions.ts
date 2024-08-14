@@ -33,13 +33,16 @@ export async function selectTicketKindAction(ticketKind: "FULL" | "HALF") {
   cookieStore.set("ticketKind", ticketKind);
 }
 
-export async function checkoutAction({
-  cardHash,
-  email,
-}: {
-  cardHash: string;
-  email: string;
-}) {
+export async function checkoutAction(
+  _prevState: unknown,
+  {
+    cardHash,
+    email,
+  }: {
+    cardHash: string;
+    email: string;
+  },
+) {
   const cookieStore = cookies();
   const eventId = cookieStore.get("eventId")?.value;
   const spots: string[] = JSON.parse(cookieStore.get("spots")?.value || "[]");
